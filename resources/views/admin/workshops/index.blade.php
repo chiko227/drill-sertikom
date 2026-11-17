@@ -1,0 +1,5 @@
+@extends('layouts.app') @section('title','Kelola Workshop') @section('content')
+<div class="sectionhead"><div><div class="eyebrow">Panel panitia</div><h2>Kelola workshop</h2></div><a class="btn teal" href="{{ route('admin.workshops.create') }}">Tambah workshop</a></div>
+<div class="panel tablewrap"><table class="table"><thead><tr><th>Workshop</th><th>Jadwal</th><th>Harga</th><th>Pendaftar</th><th>Status</th><th>Aksi</th></tr></thead><tbody>
+@forelse($workshops as $w)<tr><td><strong>{{ $w->title }}</strong></td><td>{{ $w->date->format('d/m/Y') }}</td><td>Rp{{ number_format($w->price,0,',','.') }}</td><td>{{ $w->registrations_count }}</td><td>{{ $w->is_active?'Aktif':'Nonaktif' }}</td><td><div class="actions"><a class="btn secondary small" href="{{ route('admin.workshops.edit',$w) }}">Ubah</a><form method="POST" action="{{ route('admin.workshops.destroy',$w) }}" onsubmit="return confirm('Hapus workshop ini?')">@csrf @method('DELETE')<button class="btn danger small">Hapus</button></form></div></td></tr>@empty<tr><td colspan="6">Belum ada workshop.</td></tr>@endforelse</tbody></table></div><div class="pagination">{{ $workshops->links() }}</div>
+@endsection

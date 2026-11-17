@@ -1,0 +1,5 @@
+@extends('layouts.app') @section('title','Selesaikan Pembayaran') @section('content')
+<div class="panel" style="max-width:700px;margin:20px auto;text-align:center"><div class="eyebrow">Midtrans Sandbox</div><h2 style="color:var(--navy)">Selesaikan pembayaran</h2><p>{{ $registration->workshop->title }}</p><p class="price">Rp{{ number_format($registration->workshop->price,0,',','.') }}</p><button id="pay-button" class="btn teal">Buka halaman pembayaran</button><p class="muted">Jangan tutup halaman sebelum proses pembayaran selesai.</p></div>
+<script src="{{ config('services.midtrans.snap_js_url') }}" data-client-key="{{ $clientKey }}"></script>
+<script>document.getElementById('pay-button').addEventListener('click',function(){snap.pay(@json($snapToken),{onSuccess:function(){location.href=@json(route('tickets.index'))},onPending:function(){location.href=@json(route('payments.show',$registration))},onError:function(){alert('Pembayaran belum berhasil. Silakan coba lagi.')}})});</script>
+@endsection

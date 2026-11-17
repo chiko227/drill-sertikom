@@ -1,0 +1,5 @@
+@extends('layouts.app') @section('title','Tiket Saya') @section('content')
+<div class="sectionhead"><div><div class="eyebrow">Akun peserta</div><h2>Pendaftaran saya</h2></div><a class="btn secondary" href="{{ route('workshops.index') }}">Cari workshop</a></div>
+<div class="panel tablewrap"><table class="table"><thead><tr><th>Workshop</th><th>Tanggal</th><th>Status</th><th>Tiket</th></tr></thead><tbody>
+@forelse($registrations as $r)<tr><td><strong>{{ $r->workshop->title }}</strong></td><td>{{ $r->workshop->date->translatedFormat('d M Y') }}</td><td><span class="tag {{ $r->payment_status==='paid'?'':'pending' }}">{{ ucfirst($r->payment_status) }}</span></td><td>@if($r->payment_status==='paid')<a class="btn small" href="{{ route('tickets.show',$r) }}">Buka tiket</a>@else<a class="btn secondary small" href="{{ route('payments.show',$r) }}">Bayar</a>@endif</td></tr>@empty<tr><td colspan="4" class="muted">Belum ada pendaftaran.</td></tr>@endforelse</tbody></table></div><div class="pagination">{{ $registrations->links() }}</div>
+@endsection
